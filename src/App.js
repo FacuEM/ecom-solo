@@ -1,9 +1,16 @@
-function App() {
+import "./default.scss";
+import Header from "./components/Header";
+import Homepage from "./pages/Homepage";
+
+const App = () => {
   return (
-    <div>
-      <h2>hELLO WORD</h2>
+    <div className="App">
+      <Header />
+      <div className="main">
+        <Homepage />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
