@@ -9,6 +9,7 @@ import HomepageLayout from "./layouts/HomepageLayout";
 import Homepage from "./pages/Homepage";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
+import Recovery from "./pages/Recovery";
 
 const initialState = { currentUser: null };
 
@@ -79,6 +80,14 @@ class App extends Component {
                 </MainLayout>
               )
             }
+          />
+          <Route
+            path="/recovery"
+            render={() => (
+              <MainLayout>
+                <Recovery />
+              </MainLayout>
+            )}
           />
         </Switch>
       </div>
