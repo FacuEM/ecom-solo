@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./styles.scss";
 import Logo from "./../../assets/logo.png";
 import { auth } from "./../../firebase/utils";
 
 const Header = (props) => {
-  const { currentUser } = props;
+  const currentUser = useSelector((state) => state.user.currentUser);
   return (
     <header className="header">
       <div className="wrap">
@@ -18,7 +19,10 @@ const Header = (props) => {
           {currentUser && (
             <ul>
               <li>
-                <span onClick={() => auth.signOut()}>LogOut</span>
+                <Link to="/dashboard">My Account</Link>
+              </li>
+              <li>
+                <span onClick={() => auth.signOut()}>LOGOUT</span>
               </li>
             </ul>
           )}
