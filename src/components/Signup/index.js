@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormInput from "./../forms/FormInput";
 import Button from "./../forms/Button";
 import AuthWrapper from "./../AuthWrapper";
 import "./styles.scss";
-import { auth, handleUserProfile } from "./../../firebase/utils";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser, resetAllAuthForms } from "./../../redux/User/user.actions";
 
 const Signup = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [confirmPassword, setComfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const signUpSuccess = useSelector((state) => state.user.signUpSuccess);
+  const signUpError = useSelector((state) => state.user.signUpError);
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      const err = ["Password Don't match"];
-      setErrors(err);
-      return;
+  useEffect(() => {
+    if (Array.isArray(signUpError) && signUpError.length > 0) {
+      setErrors(signUpError);
     }
+  }, [signUpError]);
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await handleUserProfile(user, { displayName });
+  useEffect(() => {
+    if (signUpSuccess) {
       setEmail("");
       setPassword("");
       setDisplayName("");
       setComfirmPassword("");
       setErrors([]);
+      dispatch(resetAllAuthForms());
       history.push("/");
-    } catch (error) {
-      console.log(error);
     }
+  }, [signUpSuccess]);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signUpUser({ displayName, email, password, confirmPassword }));
   };
 
   const configAuthWrapper = {
