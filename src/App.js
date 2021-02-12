@@ -1,8 +1,7 @@
 import { Switch, Route } from "react-router-dom";
 import React, { useEffect } from "react";
-import { auth, handleUserProfile } from "./firebase/utils";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "./redux/User/user.actions";
+import { checkUserSession } from "./redux/User/user.actions";
 import "./default.scss";
 
 // hoc
@@ -20,24 +19,7 @@ import Dashboard from "./pages/Dashboard";
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const authListener = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await handleUserProfile(userAuth);
-        userRef.onSnapshot((snapshot) => {
-          dispatch(
-            setCurrentUser({
-              id: snapshot.id,
-              ...snapshot.data(),
-            })
-          );
-        });
-      }
-      dispatch(setCurrentUser(userAuth));
-    });
-
-    return () => {
-      authListener();
-    };
+    dispatch(checkUserSession());
   }, []);
 
   return (

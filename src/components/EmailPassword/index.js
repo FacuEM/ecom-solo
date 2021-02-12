@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  resetPassword,
-  resetAllAuthForms,
+  resetPasswordStart,
+  resetUserState,
 } from "./../../redux/User/user.actions";
 import { useHistory } from "react-router-dom";
 import "./styles.scss";
@@ -18,26 +18,24 @@ const EmailPassword = () => {
   const resetPasswordSuccess = useSelector(
     (state) => state.user.resetPasswordSuccess
   );
-  const resetPasswordError = useSelector(
-    (state) => state.user.resetPasswordError
-  );
+  const userErr = useSelector((state) => state.user.userErr);
 
   useEffect(() => {
     if (resetPasswordSuccess) {
-      dispatch(resetAllAuthForms());
+      dispatch(resetUserState());
       history.push("/login");
     }
   }, [resetPasswordSuccess]);
 
   useEffect(() => {
-    if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
-      setErrors(resetPasswordError);
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr);
     }
-  }, [resetPasswordError]);
+  }, [userErr]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(resetPassword({ email }));
+    dispatch(resetPasswordStart({ email }));
   };
 
   const configAuthWrapper = {

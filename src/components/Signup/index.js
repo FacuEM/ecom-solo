@@ -5,7 +5,7 @@ import AuthWrapper from "./../AuthWrapper";
 import "./styles.scss";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser, resetAllAuthForms } from "./../../redux/User/user.actions";
+import { signOutUserStart } from "./../../redux/User/user.actions";
 
 const Signup = (props) => {
   const history = useHistory();
@@ -15,30 +15,31 @@ const Signup = (props) => {
   const [displayName, setDisplayName] = useState("");
   const [confirmPassword, setComfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const signUpSuccess = useSelector((state) => state.user.signUpSuccess);
-  const signUpError = useSelector((state) => state.user.signUpError);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const userErr = useSelector((state) => state.user.userErr);
 
   useEffect(() => {
-    if (Array.isArray(signUpError) && signUpError.length > 0) {
-      setErrors(signUpError);
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr);
     }
-  }, [signUpError]);
+  }, [userErr]);
 
   useEffect(() => {
-    if (signUpSuccess) {
+    if (currentUser) {
       setEmail("");
       setPassword("");
       setDisplayName("");
       setComfirmPassword("");
       setErrors([]);
-      dispatch(resetAllAuthForms());
       history.push("/");
     }
-  }, [signUpSuccess]);
+  }, [currentUser]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUpUser({ displayName, email, password, confirmPassword }));
+    dispatch(
+      signOutUserStart({ displayName, email, password, confirmPassword })
+    );
   };
 
   const configAuthWrapper = {

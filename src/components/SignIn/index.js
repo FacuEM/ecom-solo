@@ -3,37 +3,35 @@ import "./styles.scss";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  signInUser,
-  signInWithGoogle,
-  resetAllAuthForms,
+  emailSignInStart,
+  googleSignInStart,
 } from "./../../redux/User/user.actions";
 import FormInput from "./../forms/FormInput";
 import Button from "./../forms/Button";
 import AuthWrapper from "./../AuthWrapper";
 
-const SignIn = (props) => {
+const SignIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const signInSuccess = useSelector((state) => state.user.signInSuccess);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (signInSuccess) {
+    if (currentUser) {
       setEmail("");
       setPassword("");
-      dispatch(resetAllAuthForms());
       history.push("/");
     }
-  }, [signInSuccess]);
+  }, [currentUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signInUser({ email, password }));
+    dispatch(emailSignInStart({ email, password }));
   };
 
   const handleGoogleSignIn = () => {
-    dispatch(signInWithGoogle());
+    dispatch(googleSignInStart());
   };
 
   const configAuthWrapper = {

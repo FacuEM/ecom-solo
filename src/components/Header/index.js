@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { signOutUserStart } from "./../../redux/User/user.actions";
 import "./styles.scss";
 import Logo from "./../../assets/logo.png";
-import { auth } from "./../../firebase/utils";
 
-const Header = (props) => {
+const Header = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const signOut = () => {
+    dispatch(signOutUserStart());
+  };
   return (
     <header className="header">
       <div className="wrap">
@@ -22,7 +26,7 @@ const Header = (props) => {
                 <Link to="/dashboard">My Account</Link>
               </li>
               <li>
-                <span onClick={() => auth.signOut()}>LOGOUT</span>
+                <span onClick={signOut}>LOGOUT</span>
               </li>
             </ul>
           )}
