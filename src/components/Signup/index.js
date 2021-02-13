@@ -5,9 +5,9 @@ import AuthWrapper from "./../AuthWrapper";
 import "./styles.scss";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signOutUserStart } from "./../../redux/User/user.actions";
+import { signUpUserStart } from "./../../redux/User/user.actions";
 
-const Signup = (props) => {
+const Signup = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -38,7 +38,7 @@ const Signup = (props) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      signOutUserStart({ displayName, email, password, confirmPassword })
+      signUpUserStart({ displayName, email, password, confirmPassword })
     );
   };
 
