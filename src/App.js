@@ -6,13 +6,14 @@ import "./default.scss";
 
 // components
 import AdminToolbar from "./components/AdminToolbar";
-
 // hoc
 import WithAuth from "./hoc/withAuth";
 import WithAdminAuth from "./hoc/withAdmin";
 // layouts
 import MainLayout from "./layouts/MainLayout";
 import HomepageLayout from "./layouts/HomepageLayout";
+import AdminLayout from './layouts/AdminLayout'
+import DashboardLayout from './layouts/DashboardLayout'
 // pages
 import Homepage from "./pages/Homepage";
 import Registration from "./pages/Registration";
@@ -68,9 +69,11 @@ const App = () => {
           path="/dashboard"
           render={() => (
             <WithAuth>
+              <DashboardLayout>
               <MainLayout>
                 <Dashboard />
               </MainLayout>
+              </DashboardLayout>
             </WithAuth>
           )}
         />
@@ -78,9 +81,11 @@ const App = () => {
           path="/admin"
           render={() => (
             <WithAdminAuth>
+              <AdminLayout>
               <MainLayout>
                 <Admin />
               </MainLayout>
+              </AdminLayout>
             </WithAdminAuth>
           )}
         />
