@@ -1,28 +1,26 @@
-import { takeLatest, put, call, all } from "redux-saga/effects";
-import { auth } from "../../firebase/utils";
-import { fetchProductsStart, setProducts } from "./products.action";
+import { auth } from "./../../firebase/utils";
+import { takeLatest, put, all, call } from "redux-saga/effects";
+import { setProducts, setProduct, fetchProductsStart } from "./products.action";
 import {
   handleAddProduct,
-  handleDeleteProduct,
   handleFetchProducts,
+  handleFetchProduct,
+  handleDeleteProduct,
 } from "./products.helpers";
 import productsTypes from "./products.types";
 
-export function* addProduct({
-  payload: { productCategory, productName, productPrice, productThumbnail },
-}) {
+export function* addProduct({ payload }) {
   try {
     const timestamp = new Date();
     yield handleAddProduct({
-      productCategory,
-      productName,
-      productPrice,
-      productThumbnail,
+      ...payload,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
-  } catch (error) {}
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function* onAddProductStart() {
@@ -33,8 +31,8 @@ export function* fetchProducts({ payload }) {
   try {
     const products = yield handleFetchProducts(payload);
     yield put(setProducts(products));
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -46,11 +44,26 @@ export function* deleteProduct({ payload }) {
   try {
     yield handleDeleteProduct(payload);
     yield put(fetchProductsStart());
-  } catch (error) {}
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function* onDeleteProductStart() {
   yield takeLatest(productsTypes.DELETE_PRODUCT_START, deleteProduct);
+}
+
+export function* fetchProduct({ payload }) {
+  try {
+    const product = yield handleFetchProduct(payload);
+    yield put(setProduct(product));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* onFetchProductStart() {
+  yield takeLatest(productsTypes.FETCH_PRODUCT_START, fetchProduct);
 }
 
 export default function* productsSagas() {
@@ -58,5 +71,6 @@ export default function* productsSagas() {
     call(onAddProductStart),
     call(onFetchProductsStart),
     call(onDeleteProductStart),
+    call(onFetchProductStart),
   ]);
 }

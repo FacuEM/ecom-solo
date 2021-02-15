@@ -6,15 +6,19 @@ export const handleAddProduct = (product) => {
       .collection("products")
       .doc()
       .set(product)
-      .then(() => resolve())
-      .catch((err) => reject(err));
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 };
 
 export const handleFetchProducts = ({
   filterType,
   startAfterDoc,
-  presistProducts = [],
+  persistProducts = [],
 }) => {
   return new Promise((resolve, reject) => {
     const pageSize = 6;
@@ -30,9 +34,10 @@ export const handleFetchProducts = ({
     ref
       .get()
       .then((snapshot) => {
-        const totalCout = snapshot.size;
+        const totalCount = snapshot.size;
+
         const data = [
-          ...presistProducts,
+          ...persistProducts,
           ...snapshot.docs.map((doc) => {
             return {
               ...doc.data(),
@@ -40,13 +45,16 @@ export const handleFetchProducts = ({
             };
           }),
         ];
+
         resolve({
           data,
-          queryDoc: snapshot.docs[totalCout - 1],
-          isLastPage: totalCout < 1,
+          queryDoc: snapshot.docs[totalCount - 1],
+          isLastPage: totalCount < 1,
         });
       })
-      .catch((err) => reject(err));
+      .catch((err) => {
+        reject(err);
+      });
   });
 };
 
@@ -56,7 +64,32 @@ export const handleDeleteProduct = (documentID) => {
       .collection("products")
       .doc(documentID)
       .delete()
-      .then(() => resolve())
-      .catch((err) => reject(err));
+      .then(() => {
+        console.log(documentID, 2);
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const handleFetchProduct = (productID) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("products")
+      .doc(productID)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          resolve({
+            ...snapshot.data(),
+            documentID: productID,
+          });
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 };

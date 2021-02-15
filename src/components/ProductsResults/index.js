@@ -75,7 +75,7 @@ const ProductsResults = ({}) => {
             typeof productPrice === "undefined"
           )
             return null;
-          const configProduct = { productThumbnail, productName, productPrice };
+          const configProduct = { ...product };
           return <Product key={index} {...configProduct} />;
         })}
       </div>

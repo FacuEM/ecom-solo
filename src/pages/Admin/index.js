@@ -10,10 +10,15 @@ import FormInput from "./../../components/forms/FormInput";
 import FormSelect from "./../../components/forms/FormSelect";
 import Button from "./../../components/forms/Button";
 import LoadMore from "./../../components/LoadMore";
+import CKEditor from "ckeditor4-react";
 import "./styles.scss";
 
+const mapState = ({ productsData }) => ({
+  products: productsData.products,
+});
+
 const Admin = () => {
-  const products = useSelector((state) => state.productsData.products);
+  const { products } = useSelector(mapState);
   const dispatch = useDispatch();
   const [hideModal, setHideModal] = useState(true);
   const [productCategory, setProductCategory] = useState("mens");
@@ -126,6 +131,10 @@ const Admin = () => {
               handleChange={(e) => setProductPrice(e.target.value)}
             />
 
+            <CKEditor
+              onChange={(evt) => setProductDesc(evt.editor.getData())}
+            />
+
             <br />
 
             <Button type="submit">Add product</Button>
@@ -166,7 +175,7 @@ const Admin = () => {
                               <img className="thumb" src={productThumbnail} />
                             </td>
                             <td>{productName}</td>
-                            <td>£{productPrice}</td>
+                            <td>${productPrice}</td>
                             <td>
                               <Button
                                 onClick={() =>

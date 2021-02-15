@@ -1,8 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "../../forms/Button";
 
-const Product = ({ productThumbnail, productName, productPrice }) => {
-  if (!productThumbnail || !productName || typeof productPrice === "undefined")
+const Product = ({
+  productThumbnail,
+  productName,
+  productPrice,
+  documentID,
+}) => {
+  if (
+    !documentID ||
+    !productThumbnail ||
+    !productName ||
+    typeof productPrice === "undefined"
+  )
     return null;
   const configAddToCartBtn = {
     type: "button",
@@ -10,12 +21,16 @@ const Product = ({ productThumbnail, productName, productPrice }) => {
   return (
     <div className="product">
       <div className="thumb">
-        <img src={productThumbnail} alt="Product Thumbnail" />
+        <Link to={`/product/${documentID}`}>
+          <img src={productThumbnail} alt="Product Thumbnail" />
+        </Link>
       </div>
       <div className="details">
         <ul>
           <li>
-            <span className="name">{productName}</span>
+            <span className="name">
+              <Link to={`/product/${documentID}`}>{productName}</Link>
+            </span>
           </li>
           <li>
             <span className="price">${productPrice}</span>
