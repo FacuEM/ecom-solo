@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchProductsStart } from "../../redux/Product/products.action";
 import FormSelect from "../forms/FormSelect";
+import LoadMore from "../LoadMore";
 import Product from "./Product";
 import "./styles.scss";
 
@@ -11,6 +12,7 @@ const ProductsResults = ({}) => {
   const history = useHistory();
   const { filterType } = useParams();
   const products = useSelector((state) => state.productsData.products);
+  const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
     dispatch(fetchProductsStart({ filterType }));
@@ -21,9 +23,9 @@ const ProductsResults = ({}) => {
     history.push(`/search/${pickedFilter}`);
   };
 
-  if (!Array.isArray(products)) return null;
+  if (!Array.isArray(data)) return null;
 
-  if (products.length < 1) {
+  if (data.length < 1) {
     return (
       <div className="products">
         <p>No search results.</p>
@@ -48,12 +50,24 @@ const ProductsResults = ({}) => {
     ],
     handleChange: handleFilters,
   };
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        filterType,
+        startAfterDoc: queryDoc,
+        persistProducts: data,
+      })
+    );
+  };
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore,
+  };
   return (
     <div className="products">
       <h1>Browse Products</h1>
       <FormSelect {...configFilters} />
       <div className="productResults">
-        {products.map((product, index) => {
+        {data.map((product, index) => {
           const { productThumbnail, productName, productPrice } = product;
           if (
             !productThumbnail ||
@@ -65,6 +79,7 @@ const ProductsResults = ({}) => {
           return <Product key={index} {...configProduct} />;
         })}
       </div>
+      {!isLastPage && <LoadMore {...configLoadMore} />}
     </div>
   );
 };

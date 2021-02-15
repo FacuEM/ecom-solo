@@ -11,22 +11,40 @@ export const handleAddProduct = (product) => {
   });
 };
 
-export const handleFetchProducts = ({ filterType }) => {
+export const handleFetchProducts = ({
+  filterType,
+  startAfterDoc,
+  presistProducts = [],
+}) => {
   return new Promise((resolve, reject) => {
-    let ref = firestore.collection("products").orderBy("createdDate");
+    const pageSize = 6;
+
+    let ref = firestore
+      .collection("products")
+      .orderBy("createdDate")
+      .limit(pageSize);
 
     if (filterType) ref = ref.where("productCategory", "==", filterType);
+    if (startAfterDoc) ref = ref.startAfter(startAfterDoc);
 
     ref
       .get()
       .then((snapshot) => {
-        const productsArray = snapshot.docs.map((doc) => {
-          return {
-            ...doc.data(),
-            documentID: doc.id,
-          };
+        const totalCout = snapshot.size;
+        const data = [
+          ...presistProducts,
+          ...snapshot.docs.map((doc) => {
+            return {
+              ...doc.data(),
+              documentID: doc.id,
+            };
+          }),
+        ];
+        resolve({
+          data,
+          queryDoc: snapshot.docs[totalCout - 1],
+          isLastPage: totalCout < 1,
         });
-        resolve(productsArray);
       })
       .catch((err) => reject(err));
   });
