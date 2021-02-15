@@ -12,8 +12,8 @@ import WithAdminAuth from "./hoc/withAdmin";
 // layouts
 import MainLayout from "./layouts/MainLayout";
 import HomepageLayout from "./layouts/HomepageLayout";
-import AdminLayout from './layouts/AdminLayout'
-import DashboardLayout from './layouts/DashboardLayout'
+import AdminLayout from "./layouts/AdminLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 // pages
 import Homepage from "./pages/Homepage";
 import Registration from "./pages/Registration";
@@ -21,6 +21,7 @@ import Login from "./pages/Login";
 import Recovery from "./pages/Recovery";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import Search from "./pages/Search";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,23 @@ const App = () => {
             <HomepageLayout>
               <Homepage />
             </HomepageLayout>
+          )}
+        />
+        <Route
+          exact
+          path="/search"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/search/:filterType"
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
           )}
         />
         <Route
@@ -70,9 +88,7 @@ const App = () => {
           render={() => (
             <WithAuth>
               <DashboardLayout>
-              <MainLayout>
                 <Dashboard />
-              </MainLayout>
               </DashboardLayout>
             </WithAuth>
           )}
@@ -82,9 +98,7 @@ const App = () => {
           render={() => (
             <WithAdminAuth>
               <AdminLayout>
-              <MainLayout>
                 <Admin />
-              </MainLayout>
               </AdminLayout>
             </WithAdminAuth>
           )}

@@ -6,15 +6,16 @@ import { signOutUserStart } from "./../redux/User/user.actions";
 import Header from "./../components/Header";
 import VerticalNav from "./../components/VerticalNav";
 
-const DashboardLayout = (props) => {
+const DashBoardLayout = (props) => {
   const dispatch = useDispatch();
+
   const signOut = () => {
     dispatch(signOutUserStart());
   };
+
   return (
     <div className="dashboardLayout">
       <Header {...props} />
-
       <div className="controlPanel">
         <div className="sidebar">
           <VerticalNav>
@@ -30,11 +31,10 @@ const DashboardLayout = (props) => {
             </ul>
           </VerticalNav>
         </div>
-
         <div className="content">{props.children}</div>
       </div>
     </div>
   );
 };
 
-export default DashboardLayout;
+export default DashBoardLayout;
