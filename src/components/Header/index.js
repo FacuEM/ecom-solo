@@ -2,12 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signOutUserStart } from "./../../redux/User/user.actions";
+import { selectCartItemsCount } from "./../../redux/Cart/cart.selectors";
 import "./styles.scss";
 import Logo from "./../../assets/logo.png";
 
 const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const totalNumCartItems = useSelector((state) => selectCartItemsCount(state));
   const signOut = () => {
     dispatch(signOutUserStart());
   };
@@ -30,26 +32,27 @@ const Header = () => {
           </ul>
         </nav>
         <div className="callToActions">
-          {currentUser && (
-            <ul>
+          <ul>
+            <li>
+              <Link to="/">Your Cart: ({totalNumCartItems})</Link>
+            </li>
+            {currentUser && [
               <li>
                 <Link to="/dashboard">My Account</Link>
-              </li>
+              </li>,
               <li>
                 <span onClick={signOut}>LOGOUT</span>
-              </li>
-            </ul>
-          )}
-          {!currentUser && (
-            <ul>
+              </li>,
+            ]}
+            {!currentUser && [
               <li>
                 <Link to="/registration">Register</Link>
-              </li>
+              </li>,
               <li>
                 <Link to="/login">Login</Link>
-              </li>
-            </ul>
-          )}
+              </li>,
+            ]}
+          </ul>
         </div>
       </div>
     </header>
