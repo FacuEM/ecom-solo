@@ -24,7 +24,8 @@ import Admin from "./pages/Admin";
 import Search from "./pages/Search";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
-import Payment from './pages/Payment'
+import Payment from "./pages/Payment";
+import Order from "./pages/Order";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -84,11 +85,11 @@ const App = () => {
           exact
           path="/payment"
           render={() => (
-            <WithAuth >
-            <MainLayout>
-              <Payment />
-            </MainLayout>
-          </WithAuth>
+            <WithAuth>
+              <MainLayout>
+                <Payment />
+              </MainLayout>
+            </WithAuth>
           )}
         />
         <Route
@@ -121,6 +122,16 @@ const App = () => {
             <WithAuth>
               <DashboardLayout>
                 <Dashboard />
+              </DashboardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          path="/order/:orderID"
+          render={() => (
+            <WithAuth>
+              <DashboardLayout>
+                <Order />
               </DashboardLayout>
             </WithAuth>
           )}
