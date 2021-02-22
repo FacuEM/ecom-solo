@@ -1,14 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   selectCartItems,
   selectCartTotal,
 } from "./../../redux/Cart/cart.selectors";
 import { createStructuredSelector } from "reselect";
-import { useHistory } from "react-router-dom";
-import "./styles.scss";
+
 import Button from "../forms/Button";
 import Item from "./Item";
+import "./styles.scss";
 
 const Checkout = () => {
   const history = useHistory();
@@ -83,7 +84,9 @@ const Checkout = () => {
                             </Button>
                           </td>
                           <td>
-                            <Button onClick={() => history.push('/payment')} >Checkout</Button>
+                            <Button onClick={() => history.push("/payment")}>
+                              Checkout
+                            </Button>
                           </td>
                         </tr>
                       </tbody>

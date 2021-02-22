@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchProductsStart } from "../../redux/Product/products.action";
+
 import FormSelect from "../forms/FormSelect";
 import LoadMore from "../LoadMore";
 import Product from "./Product";

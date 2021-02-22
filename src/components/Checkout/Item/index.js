@@ -49,7 +49,7 @@ const Item = (product) => {
               {` >`}
             </span>
           </td>
-          <td>£{productPrice}</td>
+          <td>${productPrice}</td>
           <td align="center">
             <span
               className="cartBtn remove"

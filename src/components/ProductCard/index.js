@@ -6,6 +6,7 @@ import {
   setProduct,
 } from "./../../redux/Product/products.action";
 import { addProduct } from "./../../redux/Cart/cart.actions";
+
 import Button from "./../forms/Button";
 import "./styles.scss";
 

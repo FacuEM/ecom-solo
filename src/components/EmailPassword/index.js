@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetPasswordStart,
   resetUserState,
 } from "./../../redux/User/user.actions";
-import { useHistory } from "react-router-dom";
-import "./styles.scss";
+
 import AuthWrapper from "./../AuthWrapper";
 import FormInput from "./../forms/FormInput";
 import Button from "./../forms/Button";

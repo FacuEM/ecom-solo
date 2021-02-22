@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "./styles.scss";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   emailSignInStart,
   googleSignInStart,
 } from "./../../redux/User/user.actions";
+
 import FormInput from "./../forms/FormInput";
 import Button from "./../forms/Button";
 import AuthWrapper from "./../AuthWrapper";
+import "./styles.scss";
 
 const SignIn = () => {
   const history = useHistory();

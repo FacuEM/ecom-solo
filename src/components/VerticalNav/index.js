@@ -1,22 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux'
-import UserProfile from './../UserProfile';
-import './styles.scss';
+import React from "react";
+import { useSelector } from "react-redux";
 
-const VerticalNav  = ({children}) => {
-    const currentUser = useSelector(state => state.user.currentUser)
-    const configUserProfile = {
-        currentUser
-    }
-    return (
-        <div className='verticalNav'>
-            <UserProfile {...configUserProfile} />
-            <div className='menu'>
-                {children}
-            </div>
-        </div>
-    )
-}
+import UserProfile from "./../UserProfile";
+import "./styles.scss";
 
+const VerticalNav = ({ children }) => {
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const configUserProfile = {
+    currentUser,
+  };
+  return (
+    <div className="verticalNav">
+      <UserProfile {...configUserProfile} />
+      <div className="menu">{children}</div>
+    </div>
+  );
+};
 
-export default VerticalNav
+export default VerticalNav;

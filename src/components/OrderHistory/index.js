@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import moment from "moment";
 import {
   TableContainer,
@@ -8,7 +9,6 @@ import {
   TableBody,
   TableCell,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 
 const columns = [
   { id: "orderCreatedDate", label: "Order Date" },
