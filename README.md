@@ -1,6 +1,11 @@
 # ecom-solo
 This project is an Ecommerce developed from scratch with Create React App and Firebase integrated with Stripe API. 
-### Demo: 
+
+## Demo:
+
+[![Demo ecom-solo](https://img.youtube.com/vi/LuV_o6a8b1s/maxresdefault.jpg)](https://youtu.be/LuV_o6a8b1s)
+
+### App Demo: 
   https://ecom-solo.web.app/
 ### Features:
 - User register/login (email & password and google login) /logout
@@ -63,3 +68,4 @@ ecom-solo
 ├── package.json
 └── firebase.json
 ```
+
