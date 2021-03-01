@@ -3,7 +3,7 @@ This project is an Ecommerce developed from scratch with Create React App and Fi
 
 ## Demo:
 
-[![Demo ecom-solo](https://img.youtube.com/vi/LuV_o6a8b1s/hqdefault.jpg)](https://youtu.be/LuV_o6a8b1s)
+[![Demo ecom-solo](https://img.youtube.com/vi/UVZDQCf5Lio/maxresdefault.jpg)](https://youtu.be/UVZDQCf5Lio)
 
 ### App Demo: 
   https://ecom-solo.web.app/
