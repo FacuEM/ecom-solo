@@ -5,8 +5,6 @@ This project is an Ecommerce developed from scratch with Create React App and Fi
 
 [![Demo ecom-solo](https://img.youtube.com/vi/UVZDQCf5Lio/hqdefault.jpg)](https://youtu.be/UVZDQCf5Lio)
 
-### App Demo: 
-  https://ecom-solo.web.app/
 ### Features:
 - User register/login (email & password and google login) /logout
 - Password recovery 
